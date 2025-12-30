@@ -2,10 +2,19 @@ import os
 import json
 import requests
 
-BOT_TOKEN = os.environ["BOT_TOKEN"]
-
 def handler(request):
-    update = request.json
+    BOT_TOKEN = os.environ.get("BOT_TOKEN")
+
+    if not BOT_TOKEN:
+        return {
+            "statusCode": 500,
+            "body": "BOT_TOKEN not set"
+        }
+
+    update = request.get_json()
+
+    if not update:
+        return {"statusCode": 200, "body": "no data"}
 
     if "message" in update:
         chat_id = update["message"]["chat"]["id"]
