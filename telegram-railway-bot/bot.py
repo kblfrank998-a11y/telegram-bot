@@ -7,12 +7,9 @@ BOT_TOKEN = os.environ.get("BOT_TOKEN")
 app = Application.builder().token(BOT_TOKEN).build()
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("Hello! Your bot is working 🎉")
+    await update.message.reply_text("🚆 Bot running on Railway!")
 
 app.add_handler(CommandHandler("start", start))
 
-async def handler(request):
-    data = await request.json()
-    update = Update.de_json(data, app.bot)
-    await app.process_update(update)
-    return {"ok": True}
+if __name__ == "__main__":
+    app.run_polling()
